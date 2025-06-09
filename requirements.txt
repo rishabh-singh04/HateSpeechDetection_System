@@ -1,10 +1,13 @@
 # Core Requirements
+email-validator>=2.0.0  # Required for email validation in Pydantic
 fastapi==0.109.1
-uvicorn==0.27.0
+
 python-dotenv==1.0.0
 pydantic>=2.0
 pydantic-settings>=2.0
-email-validator>=2.0.0  # Required for email validation in Pydantic
+python-jose[cryptography]
+python-multipart 
+uvicorn==0.27.0
 
 # Database
 sqlalchemy==2.0.25
@@ -37,3 +40,5 @@ huggingface-hub==0.19.4  # For model downloads
 pytest==7.4.4
 httpx==0.26.0
 pytest-cov==4.1.0
+
+
