@@ -1,0 +1,6 @@
+myev1/
+.env
+__pycache__/
+_pycache_/
+
+.pytest_cache/

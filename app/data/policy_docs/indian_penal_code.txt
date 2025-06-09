@@ -1,0 +1,31 @@
+Indian Penal Code Provisions on Hate Speech
+
+Overview
+India addresses hate speech through various sections of the Indian Penal Code (IPC) and related legal provisions to maintain public order, prevent communal disharmony, and protect citizens' dignity.
+
+Relevant Sections
+- **Section 153A**: Promoting enmity between different groups on grounds of religion, race, language, or caste. Punishable with up to 3 years imprisonment and/or fine.
+- **Section 295A**: Deliberate and malicious acts intended to outrage religious feelings. Punishable with up to 3 years imprisonment and/or fine.
+- **Section 505(1)**: Publishing or circulating statements with intent to incite hatred or alarm among the public. Covers rumor-mongering that leads to fear or violence.
+- **IT Act Section 66A** (struck down but relevant historically): Criminalized offensive electronic communication.
+
+Definition of Hate Speech
+There is no single definition, but courts recognize hate speech as any expression that promotes hatred against a protected group and could disturb public peace.
+
+Judicial Principles
+- Intent, tone, and impact matter more than literal words.
+- Truth is not always a defense if the speech is inflammatory.
+- Satire or parody is not protected if it incites harm.
+
+Enforcement
+- FIR can be registered based on complaint.
+- Courts can order take-downs or injunctions.
+- Police may issue preventive notices under CrPC.
+
+Examples of Punishable Acts
+- Making inflammatory speeches during election campaigns
+- Posting communal memes or misinformation
+- Threats based on caste or religion
+
+Policy Notes
+The Supreme Court has emphasized restraint in using these laws and the need to protect free speech unless there's real incitement to violence.
