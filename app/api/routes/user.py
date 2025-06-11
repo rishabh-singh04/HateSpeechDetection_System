@@ -8,7 +8,7 @@ from app.schemas.user import UserResponse
 from app.crud.user import get_all_users, delete_user
 from app.api.dependencies import get_current_user
 
-router = APIRouter(prefix="/users", tags=["users"])
+router = APIRouter(prefix="", tags=["users"])
 
 @router.get("/", response_model=list[UserResponse])
 async def list_users(

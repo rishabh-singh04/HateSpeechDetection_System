@@ -12,7 +12,7 @@ from app.schemas.user import UserCreate
 from app.db.models.user import User
 from app.api.dependencies import get_current_user
 
-router = APIRouter(prefix="/auth", tags=["auth"])
+router = APIRouter(tags=["auth"])
 
 @router.post("/login", response_model=Token)
 async def login_for_access_token(

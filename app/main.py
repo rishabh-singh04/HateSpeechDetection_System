@@ -19,8 +19,8 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
-# Include routers
-app.include_router(auth.router)
-app.include_router(user.router, prefix="/users", tags=["users"])
-app.include_router(moderation.router, prefix="/moderation", tags=["moderation"])
-app.include_router(policies.router, prefix="/policies", tags=["policies"])
+# Update the router includes:
+app.include_router(auth.router, prefix="/api/auth", tags=["auth"])
+app.include_router(user.router, prefix="/api/users", tags=["users"])
+app.include_router(moderation.router, prefix="/api/moderation", tags=["moderation"])
+app.include_router(policies.router, prefix="/api/policies", tags=["policies"])
