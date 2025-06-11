@@ -1,6 +1,7 @@
 # app/schemas/user.py
 
-from pydantic import BaseModel, EmailStr
+from pydantic import BaseModel, EmailStr, ConfigDict
+from datetime import datetime
 
 class UserBase(BaseModel):
     username: str
@@ -14,5 +15,8 @@ class UserResponse(UserBase):
     id: int
     is_active: bool
     is_superuser: bool
-    created_at: str
-    updated_at: str | None
+    created_at: datetime
+    updated_at: datetime | None
+    
+    class Config:
+        from_attributes = True  # This replaces orm_mode = True

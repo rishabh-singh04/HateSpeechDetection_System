@@ -3,18 +3,6 @@
 import os, sys
 sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), '..', '..')))
 
-# import pytest
-# from app.agents.policy_reasoning import PolicyReasoningAgent
-
-# @pytest.fixture
-# def reasoner():
-#     return PolicyReasoningAgent()
-
-# def test_reason(reasoner):
-#     policies = [{"name": "Community Guidelines", "snippet": "Hate speech is prohibited."}]
-#     reasoning = reasoner.reason("Hate", "Test hate message", policies)
-#     assert "Community Guidelines" in reasoning
-
 from app.agents.policy_reasoning import PolicyReasoningAgent
 
 # Mock OpenAI response

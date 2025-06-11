@@ -1,23 +1,4 @@
-
-# import sys
-# import os
-# sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), '..', '..')))
-
-# import pytest
-# from app.agents.hate_speech_detection import HateSpeechDetectionAgent
-
-# @pytest.fixture
-# def detector():
-#     return HateSpeechDetectionAgent()
-
-# def test_classify_hate(detector):
-#     result = detector.classify("I hate all people from X country.")
-#     assert result["classification"] in ["Hate", "Toxic", "Offensive", "Neutral"]
-#     assert 0 <= result["confidence"] <= 1
-
-# def test_classify_neutral(detector):
-#     result = detector.classify("Hello, how are you?")
-#     assert result["classification"] == "Neutral"
+# app/test/test_detector.py
 
 import sys
 import os

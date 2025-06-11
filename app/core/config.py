@@ -16,6 +16,7 @@ class Settings(BaseSettings):
     SECRET_KEY: str = "your-secret-key-here"
     ALGORITHM: str = "HS256"
     ACCESS_TOKEN_EXPIRE_MINUTES: int = 30
+    SECURE_COOKIES: bool = True # Set to True in production
     
     ENVIRONMENT: str = "development"  # or "production"
 

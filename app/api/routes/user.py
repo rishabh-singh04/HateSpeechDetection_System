@@ -4,45 +4,34 @@ from fastapi import APIRouter, Depends, HTTPException, status
 from sqlalchemy.orm import Session
 from app.db.session import get_db
 from app.db.models.user import User
-from app.schemas.user import UserCreate, UserResponse
-from app.services.user_service import create_user
+from app.schemas.user import UserResponse
+from app.crud.user import get_all_users, delete_user
 from app.api.dependencies import get_current_user
 
+router = APIRouter(prefix="/users", tags=["users"])
 
-router = APIRouter()
-
-@router.post("/", response_model=UserResponse)
-async def create_new_user(
-    user_data: UserCreate,
-    db: Session = Depends(get_db)
+@router.get("/", response_model=list[UserResponse])
+async def list_users(
+    db: Session = Depends(get_db),
+    current_user: User = Depends(get_current_user)
 ):
-    """Create a new user"""
     try:
-        return create_user(user_data, db)
+        users = get_all_users(db)
+        return [UserResponse.from_orm(user) for user in users]
     except Exception as e:
-        raise HTTPException(status_code=400, detail=str(e))
-    
+        raise HTTPException(status_code=500, detail=str(e))
 
 @router.delete("/{user_id}")
-async def delete_user(
+async def delete_user_endpoint(
     user_id: int,
     db: Session = Depends(get_db),
     current_user: User = Depends(get_current_user)
 ):
-    """Delete a user (admin only)"""
-    if not current_user.is_superuser:
-        raise HTTPException(
-            status_code=status.HTTP_403_FORBIDDEN,
-            detail="Only admin users can delete accounts"
-        )
-    
-    user = db.query(User).filter(User.id == user_id).first()
-    if not user:
-        raise HTTPException(
-            status_code=status.HTTP_404_NOT_FOUND,
-            detail="User not found"
-        )
-    
-    db.delete(user)
-    db.commit()
-    return {"message": "User deleted successfully"}
+    try:
+        if delete_user(db, user_id, current_user):
+            return {"message": "User deleted successfully"}
+        raise HTTPException(status_code=404, detail="User not found")
+    except HTTPException:
+        raise
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=str(e))

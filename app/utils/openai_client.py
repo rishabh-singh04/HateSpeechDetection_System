@@ -7,7 +7,7 @@ class OpenAIClient:
     def __init__(self):
         self.client = AzureOpenAI(
             api_version="2023-12-01-preview",
-            azure_endpoint=os.getenv("OPENAI_ENDPOINT"),  # e.g., "https://chat.<company>.com"
+            azure_endpoint=os.getenv("OPENAI_ENDPOINT"),
             api_key=os.getenv("OPENAI_API_KEY")
         )
 

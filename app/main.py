@@ -20,7 +20,7 @@ app.add_middleware(
 )
 
 # Include routers
-app.include_router(auth.router, prefix="/api/routes/auth", tags=["Authentication"])
-app.include_router(moderation.router, prefix="/api/routes/moderation", tags=["Moderation"])
-app.include_router(policies.router, prefix="/api/routes/policies", tags=["Policies"])
-app.include_router(user.router, prefix="/api/routes/user", tags=["User"])
+app.include_router(auth.router)
+app.include_router(user.router, prefix="/users", tags=["users"])
+app.include_router(moderation.router, prefix="/moderation", tags=["moderation"])
+app.include_router(policies.router, prefix="/policies", tags=["policies"])

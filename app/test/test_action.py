@@ -1,18 +1,4 @@
 # app/test/test_action.py
-# import pytest
-# from app.agents.action_recommender import ActionRecommenderAgent
-
-# @pytest.fixture
-# def recommender():
-#     return ActionRecommenderAgent()
-
-# def test_recommend_hate(recommender):
-#     action = recommender.recommend("Hate", "This violates policies.")
-#     assert action["action"] == "Remove"
-
-# def test_recommend_neutral(recommender):
-#     action = recommender.recommend("Neutral", "No issues found.")
-#     assert action["action"] == "Allow"
 
 import sys, os
 sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), '..', '..')))

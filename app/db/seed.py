@@ -55,30 +55,6 @@ def seed_data():
             else:
                 print(f"User {user_data['username']} already exists")
 
-        # Sample policies
-        # policies = [
-        #     {
-        #         "name": "Google Hate Speech Policy",
-        #         "content": open("google_policy.txt").read()
-        #     },
-        #     {
-        #         "name": "Indian Penal Code Provisions",
-        #         "content": open("indian_penal_code.txt").read() 
-        #     },
-        #     {
-        #         "name": "Reddit Hate Speech Policy",
-        #         "content": open("reddit_policy.txt").read()
-        #     },
-        #     {
-        #         "name": "Meta Policy",
-        #         "content": open("meta_policy.txt").read() 
-        #     },
-        #     {
-        #         "name": "US Laws for Hate Speech",
-        #         "content": open("us_laws.txt").read()
-        #     }
-
-        # ]
         policies = [
             {
                 "name": os.path.splitext(filename)[0].replace("_", " ").title(),

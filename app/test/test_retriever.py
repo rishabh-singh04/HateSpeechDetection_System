@@ -1,29 +1,4 @@
-
-
 # tests/test_hybrid_retriever.py
-
-
-# import pytest
-# from sqlalchemy.orm import Session
-# from app.db.base import Base, get_db
-# from app.agents.hybrid_retriever import HybridRetrieverAgent
-
-
-
-# @pytest.fixture
-# def retriever(db: Session = get_db()):
-#     retriever = HybridRetrieverAgent()
-#     retriever.load_documents(db)
-#     return retriever
-
-# def test_search(retriever):
-#     results = retriever.search("hate speech", k=2)
-#     assert len(results) == 2
-#     assert "name" in results[0]
-#     assert "snippet" in results[0]
-
-
-# app/test/test_retriever.py
 
 import os, sys
 sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), '..', '..')))

@@ -13,46 +13,6 @@ import json
 import numpy as np
 from app.services.embedding_service import get_embedding
 
-# class HybridRetrieverAgent:
-#     def __init__(self):
-#         self._doc_ids: List[int] = []
-#         self._doc_texts: List[str] = []
-#         self._embeddings = np.array([])  # Initialize empty array
-
-#     def load_documents(self, db: Session) -> None:
-#         """Preload policy documents and their embeddings."""
-#         docs = db.query(PolicyDocument).filter(PolicyDocument.embedding.isnot(None)).all()
-#         self._doc_ids = [doc.id for doc in docs]
-#         self._doc_texts = [doc.content for doc in docs]
-#         self._embeddings = np.array([json.loads(doc.embedding) for doc in docs])
-
-#     def search(self, db: Session, query: str, k: int = 3) -> List[Dict]:
-#         """Perform semantic search on preloaded embeddings and return top-k documents."""
-#         if len(self._embeddings) == 0:
-#             raise ValueError("Embeddings not loaded. Call `load_documents()` first.")
-
-#         query_embedding = np.array(get_embedding(query))
-#         similarities = self._embeddings @ query_embedding
-
-#         top_k_indices = np.argsort(similarities)[::-1][:k]
-#         top_doc_ids = [self._doc_ids[idx] for idx in top_k_indices]
-#         top_scores = [float(similarities[idx]) for idx in top_k_indices]
-
-#         docs = db.query(PolicyDocument).filter(PolicyDocument.id.in_(top_doc_ids)).all()
-#         id_to_doc = {doc.id: doc for doc in docs}
-
-#         return [
-#             {
-#                 "id": doc.id,
-#                 "name": doc.name,
-#                 "score": score,
-#                 "snippet": doc.content[:300]
-#             }
-#             for doc, score in zip([id_to_doc[i] for i in top_doc_ids], top_scores)
-#         ]
-
-
-
 class HybridRetrieverAgent:
     def __init__(self):
         self.model = SentenceTransformer('all-MiniLM-L6-v2')
@@ -67,9 +27,6 @@ class HybridRetrieverAgent:
         docs = db.query(PolicyDocument).all()
         self.documents = [(doc.id, doc.name, doc.content) for doc in docs]
         
-        # # Generate embeddings on-the-fly
-        # embeddings = self.model.encode([doc[2] for doc in self.documents])
-        # self.index.add(embeddings)
         if self.documents:
             self.embeddings = self.model.encode([doc[2] for doc in self.documents])
             # Normalize embeddings for cosine similarity
