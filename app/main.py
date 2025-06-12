@@ -3,7 +3,7 @@
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 from app.core.config import settings
-from app.api.routes import moderation, policies, user, auth
+from app.api.routes import moderation, policies, user, auth, audio  
 
 app = FastAPI(
     title="Content Moderation API",
@@ -24,3 +24,4 @@ app.include_router(auth.router, prefix="/api/auth", tags=["auth"])
 app.include_router(user.router, prefix="/api/users", tags=["users"])
 app.include_router(moderation.router, prefix="/api/moderation", tags=["moderation"])
 app.include_router(policies.router, prefix="/api/policies", tags=["policies"])
+app.include_router(audio.router, prefix="/api/audio", tags=["audio"])

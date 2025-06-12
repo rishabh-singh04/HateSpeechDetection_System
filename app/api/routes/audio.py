@@ -1,25 +1,19 @@
-# # app/api/routes/audio.py
+# app/api/routes/audio.py
+from fastapi import APIRouter, UploadFile
+from app.services.whisper_service import WhisperRealtime
+from app.schemas.audio import AudioRequest, AudioResponse
+import base64
 
-# from fastapi import APIRouter, UploadFile, File, HTTPException
-# from tempfile import NamedTemporaryFile
-# from app.schemas.moderation import ModerationResponse
-# from app.services.audio_moderation_service import moderate_audio_content
-# from app.core.exceptions import AudioProcessingError
+router = APIRouter(prefix="", tags=["audio"])
+processor = WhisperRealtime(model_size="base")  # Initialize once
 
-# router = APIRouter()
+@router.post("/transcribe", response_model=AudioResponse)
+async def transcribe_base64(request: AudioRequest):
+    """Endpoint for base64 audio data"""
+    return processor.transcribe(request.audio_data, request.language)
 
-# @router.post("/moderate", 
-#            response_model=ModerationResponse,
-#            summary="Moderate audio content")
-# async def moderate_audio(
-#     file: UploadFile = File(..., description="Audio file to moderate")
-# ):
-#     try:
-#         with NamedTemporaryFile(delete=True) as temp_audio:
-#             temp_audio.write(file.file.read())
-#             temp_audio.seek(0)
-#             return moderate_audio_content(temp_audio.name)
-#     except AudioProcessingError as e:
-#         raise HTTPException(status_code=400, detail=str(e))
-#     except Exception as e:
-#         raise HTTPException(status_code=500, detail="Audio processing failed")
+@router.post("/transcribe-file", response_model=AudioResponse)
+async def transcribe_file(file: UploadFile, language: str = "en"):
+    """Endpoint for file uploads"""
+    audio_data = base64.b64encode(await file.read()).decode("utf-8")
+    return processor.transcribe(audio_data, language)
