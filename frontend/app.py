@@ -3,6 +3,7 @@ import sys
 from pathlib import Path
 import streamlit as st
 from datetime import datetime
+from components.common import api_request
 
 # Initialize session state
 if 'access_token' not in st.session_state:

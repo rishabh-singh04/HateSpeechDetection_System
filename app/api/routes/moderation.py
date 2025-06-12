@@ -7,6 +7,8 @@ from app.services.moderation_service import moderate_content
 from sqlalchemy.orm import Session
 from app.db.models.user import User
 from app.api.dependencies import get_current_user
+from app.schemas.moderation import ExportRequest, ModerationResult
+from app.data.exports.moderation_exports import ModerationExporter
 
 router = APIRouter()
 
@@ -17,7 +19,16 @@ async def moderate_text(
     current_user: User = Depends(get_current_user)
 ):
     try:
+        # exporter = ModerationExporter()
+        # exporter.export_results([ModerationResult(
+        #     text="TEST",
+        #     result="TEST",
+        #     action="TEST",
+        #     reason="TEST",
+        #     full_reason="TEST",
+        #     snippet="TEST"
+        # )])
         return moderate_content(request.text, db)
     except Exception as e:
+        print(f"Export test failed: {e}")
         raise HTTPException(status_code=500, detail=str(e))
-    

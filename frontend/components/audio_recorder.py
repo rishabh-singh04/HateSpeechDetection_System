@@ -5,13 +5,16 @@ from components.common import api_request
 import time
 from datetime import datetime
 
-
 def audio_recorder_component():
-    """Improved audio recorder with better state management"""
-    # Initialize session state for recording status
+    """Fixed audio recorder with proper JS-Streanlit communication"""
+    # Initialize session states
     if 'recording_status' not in st.session_state:
         st.session_state.recording_status = "Ready to record"
-    
+    if 'audio_data' not in st.session_state:
+        st.session_state.audio_data = None
+    if 'transcription' not in st.session_state:
+        st.session_state.transcription = None
+
     # Main recorder UI
     st.markdown("""
     <style>
@@ -22,23 +25,26 @@ def audio_recorder_component():
         text-align: center;
         font-weight: bold;
     }
-    .recording {
-        background-color: #ffcccc;
-        color: #cc0000;
-    }
-    .ready {
-        background-color: #ccffcc;
-        color: #006600;
-    }
+    .recording { background-color: #ffcccc; color: #cc0000; }
+    .ready { background-color: #ccffcc; color: #006600; }
+    .error { background-color: #ffdddd; color: #ff0000; }
     </style>
     """, unsafe_allow_html=True)
 
-    # JavaScript for recording
+    # JavaScript for recording with improved message handling
     recorder_js = """
     <script>
     let mediaRecorder;
     let audioChunks = [];
     let stream;
+
+    function sendAudioToPython(base64data) {
+        const data = {
+            audio_data: base64data,
+            is_audio: true
+        };
+        window.parent.postMessage(data, "*");
+    }
 
     async function startRecording() {
         try {
@@ -51,11 +57,10 @@ def audio_recorder_component():
                 }
             };
             
-            mediaRecorder.start(100); // Collect data every 100ms
+            mediaRecorder.start(100);
             document.getElementById('status').className = 'recording-status recording';
             document.getElementById('status').textContent = "Recording...";
             
-            // Automatically stop after 2 minutes
             setTimeout(() => {
                 if (mediaRecorder.state === 'recording') {
                     stopRecording();
@@ -64,6 +69,7 @@ def audio_recorder_component():
             
         } catch (error) {
             console.error("Recording error:", error);
+            document.getElementById('status').className = 'recording-status error';
             document.getElementById('status').textContent = "Error: " + error.message;
         }
     }
@@ -76,10 +82,9 @@ def audio_recorder_component():
                 
                 reader.onloadend = () => {
                     const base64data = reader.result.split(',')[1];
-                    resolve(base64data);
+                    sendAudioToPython(base64data);
                     audioChunks = [];
                     
-                    // Stop all tracks
                     if (stream) {
                         stream.getTracks().forEach(track => track.stop());
                     }
@@ -99,37 +104,44 @@ def audio_recorder_component():
 
     window.startRecording = startRecording;
     window.stopRecording = stopRecording;
+
+    // Listen for Streamlit ready event
+    window.addEventListener('message', (event) => {
+        if (event.data === 'streamlit:componentReady') {
+            console.log('Streamlit component ready');
+        }
+    });
     </script>
     """
 
     # Inject the JavaScript
-    st.components.v1.html(recorder_js)
-    
+    st.components.v1.html(recorder_js, height=0)
+
     # Recording controls
     col1, col2 = st.columns(2)
     with col1:
         if st.button("🎤 Start Recording"):
-            st.session_state.recording_status = "Recording..."
             st.components.v1.html("""
             <script>
-            window.startRecording();
+            if (window.stopRecording) {
+                window.stopRecording();
+            }
             </script>
-            """)
+            """, height=0)
+            st.session_state.recording_status = "Recording..."
     
     with col2:
         if st.button("⏹ Stop Recording"):
-            st.session_state.recording_status = "Processing..."
+            
             st.components.v1.html("""
             <script>
-            window.stopRecording().then(base64data => {
-                window.parent.postMessage({
-                    type: 'audioData',
-                    data: base64data
-                }, '*');
-            });
+            if (window.stopRecording) {
+                window.stopRecording();
+            }
             </script>
             """, height=0)
-    
+            st.session_state.recording_status = "Processing..."
+
     # Status display
     status_class = "recording" if "Recording" in st.session_state.recording_status else "ready"
     st.markdown(
@@ -137,59 +149,48 @@ def audio_recorder_component():
         unsafe_allow_html=True
     )
 
-    # Handle audio data from JavaScript
+    # # JavaScript message listener for audio data
+    # st.components.v1.html("""
+    # <script>
+    # window.addEventListener('message', (event) => {
+    #     if (event.data.is_audio) {
+    #         const audioData = event.data.audio_data;
+    #         window.parent.streamlitSessionState.set(
+    #             {'audio_data': audioData},
+    #             {from_js: true}
+    #         );
+    #     }
+    # });
+    # </script>
+    # """, height=0)
+
+    # Handle the audio data
     if st.session_state.get('audio_data'):
         st.audio(st.session_state.audio_data, format="audio/wav")
         
-        transcribe_col, save_col = st.columns(2)
-        with transcribe_col:
-            if st.button("📡 Transcribe Audio", key="transcribe_main"):
-                with st.spinner("Transcribing audio..."):
-                    start_time = time.time()
-                    try:
-                        response = api_request(
-                            "POST",
-                            "/transcribe",
-                            json={
-                                "audio_data": st.session_state.audio_data,
-                                "language": "en"
-                            },
-                            timeout=30  # Increased timeout for longer audio
-                        )
-                        
-                        if response and response.status_code == 200:
-                            transcription = response.json()
-                            processing_time = time.time() - start_time
-                            
-                            # Add processing time to results
-                            transcription['processing_time'] = f"{processing_time:.2f}s"
-                            st.session_state.transcription = transcription
-                            
-                            # Save to history
-                            timestamp = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
-                            st.session_state.transcriptions.append({
-                                'timestamp': timestamp,
-                                'audio': st.session_state.audio_data,
-                                'transcription': transcription
-                            })
-                            
-                            st.success("Transcription complete!")
-                            st.json(transcription)
-                        else:
-                            st.error(f"Transcription failed: {response.text if response else 'No response'}")
-                    except Exception as e:
-                        st.error(f"Transcription error: {str(e)}")
+        if st.button("📡 Transcribe Audio"):
+            with st.spinner("Transcribing..."):
+                try:
+                    response = api_request(
+                        "POST",
+                        "/transcribe",
+                        json={
+                            "audio_data": st.session_state.audio_data,
+                            "language": "en"
+                        },
+                        timeout=30
+                    )
+                    
+                    if response and response.status_code == 200:
+                        st.session_state.transcription = response.json()
+                        st.success("Transcription successful!")
+                        st.json(st.session_state.transcription)
+                    else:
+                        st.error("Transcription failed")
+                except Exception as e:
+                    st.error(f"Error: {str(e)}")
 
-    # JavaScript message listener
-    st.components.v1.html("""
-    <script>
-    window.addEventListener('message', (event) => {
-        if (event.data.type === 'audioData') {
-            window.parent.streamlitSessionState.set(
-                {'audio_data': event.data.data},
-                {from_js: true}
-            );
-        }
-    });
-    </script>
-    """, height=0)
+    # Force a rerun to update the UI after receiving audio
+    if st.session_state.get('audio_data_updated', False):
+        st.session_state.audio_data_updated = False
+        st.rerun()

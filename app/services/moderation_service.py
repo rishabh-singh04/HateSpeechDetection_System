@@ -6,7 +6,9 @@ from app.agents.policy_reasoning import PolicyReasoningAgent
 from app.agents.action_recommender import ActionRecommenderAgent
 from app.schemas.moderation import ModerationResponse
 from datetime import datetime
+from app.utils.decorators import export_moderation_results
 
+@export_moderation_results
 def moderate_content(text: str, db) -> ModerationResponse:
     # Step 1: Classify
     detector = HateSpeechDetectionAgent()
@@ -32,4 +34,6 @@ def moderate_content(text: str, db) -> ModerationResponse:
         timestamp=datetime.utcnow().isoformat(),
         confidence=classification.get("confidence")
     )
+
+print(f"moderate_content is decorated: {hasattr(moderate_content, '__wrapped__')}")
 
