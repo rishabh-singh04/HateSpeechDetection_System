@@ -19,15 +19,6 @@ async def moderate_text(
     current_user: User = Depends(get_current_user)
 ):
     try:
-        # exporter = ModerationExporter()
-        # exporter.export_results([ModerationResult(
-        #     text="TEST",
-        #     result="TEST",
-        #     action="TEST",
-        #     reason="TEST",
-        #     full_reason="TEST",
-        #     snippet="TEST"
-        # )])
         return moderate_content(request.text, db)
     except Exception as e:
         print(f"Export test failed: {e}")

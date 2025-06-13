@@ -23,38 +23,6 @@ def handle_errors(default_return=None):
         return wrapper
     return decorator
 
-
-
-# def export_moderation_results(func):
-#     @wraps(func)
-#     def wrapper(text: str, db):
-#         # Call the original function
-#         result = func(text, db)
-        
-#         # Handle both dict and string reasoning
-#         if isinstance(result.reasoning, dict):
-#             reason = result.reasoning.get("summary", "")
-#             full_reason = str(result.reasoning)
-#         else:
-#             reason = str(result.reasoning)[:100]  # First 100 chars for summary
-#             full_reason = str(result.reasoning)
-        
-#         export_data = ModerationResult(
-#             text=text,
-#             result=result.classification,
-#             action=result.action,
-#             reason=reason,
-#             full_reason=full_reason,
-#             snippet=text[:100] + "..." if len(text) > 100 else text,
-#             timestamp=datetime.fromisoformat(result.timestamp)
-#         )
-        
-#         # Export to CSV
-#         exporter = ModerationExporter()
-#         exporter.export_results([export_data])
-        
-#         return result
-#     return wrapper
 def export_moderation_results(func: Callable) -> Callable:
     @functools.wraps(func)
     def wrapper(text: str, db: Any) -> Any:

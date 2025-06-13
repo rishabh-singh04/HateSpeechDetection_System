@@ -1,11 +1,11 @@
 # app/utils/speech_to_text.py
 
-import whisper
+import app.test.test_whisper as test_whisper
 import os
 
 class WhisperTranscriber:
     def __init__(self, model_name: str = "base"):
-        self.model = whisper.load_model(model_name)
+        self.model = test_whisper.load_model(model_name)
 
     def transcribe_audio(self, audio_path: str) -> str:
         if not os.path.exists(audio_path):

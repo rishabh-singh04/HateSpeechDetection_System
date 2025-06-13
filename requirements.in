@@ -47,6 +47,7 @@ numpy==1.26.3
 # Streamlit frontend
 streamlit==1.34.0
 soundfile==0.12.1
+streamlit-audio-recorder
 
 # Audio processing (fallback)
 pydub==0.25.1
