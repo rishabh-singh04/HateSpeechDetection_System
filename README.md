@@ -1,5 +1,5 @@
 
-# Whisper Realtime Transcription Service
+Hate Speech Detector with Realtime Audio Enabled Transcription Service
 
 A Python service for real-time audio transcription using OpenAI's Whisper model. This service accepts base64-encoded audio and returns transcribed text with additional metadata.
 
