@@ -1,0 +1,31 @@
+version: "3.9"
+
+services:
+  app:
+    build:
+      context: ..
+      dockerfile: dockerfile/Dockerfile
+    restart: always
+    env_file:
+      - ../.env       # ✅ Points to the .env file in the project root
+    ports:
+      - "8000:8000"
+    depends_on:
+      - db
+    volumes:
+      - ..:/app
+
+  db:
+    image: postgres:17
+    restart: always
+    environment:
+      POSTGRES_USER: ${POSTGRES_USER}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
+      POSTGRES_DB: ${POSTGRES_DB}
+    ports:
+      - "5432:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+
+volumes:
+  postgres_data:
