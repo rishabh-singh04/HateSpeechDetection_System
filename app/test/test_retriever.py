@@ -1,44 +1,28 @@
-# tests/test_hybrid_retriever.py
+# tests/test_retriever.py
 
 import os, sys
 sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), '..', '..')))
 
+# tests/test_hybrid_retriever.py
 import json
-import numpy as np
-from sqlalchemy import create_engine
-from sqlalchemy.orm import sessionmaker
 from app.agents.hybrid_retriever import HybridRetrieverAgent
 from app.db.models.policy import PolicyDocument
 
-# Setup in-memory test database
-engine = create_engine('sqlite:///:memory:')
-Session = sessionmaker(bind=engine)
-db = Session()
-
-# Create tables
-from app.db.base import Base
-Base.metadata.create_all(engine)
-
-def test_hybrid_retriever():
+def test_hybrid_retriever(db_session):
     # Add test data
     test_doc = PolicyDocument(
         name="Test Policy",
-        content="No hate speech allowed",
-        embedding=json.dumps([0.1, 0.2, 0.3])  # Simple test embedding
+        content="No hate speech allowed"
     )
-    db.add(test_doc)
-    db.commit()
+    db_session.add(test_doc)
+    db_session.commit()
 
     # Test the retriever
+    from app.agents.hybrid_retriever import HybridRetrieverAgent
     agent = HybridRetrieverAgent()
-    agent.load_documents(db)
+    agent.load_documents(db_session)
     
-    results = agent.search(db, "hate speech", k=1)
+    results = agent.search("hate speech", k=1)
     assert len(results) == 1
     assert results[0]["name"] == "Test Policy"
     assert isinstance(results[0]["score"], float)
-    
-    print("✅ HybridRetriever tests passed!")
-
-if __name__ == "__main__":
-    test_hybrid_retriever()

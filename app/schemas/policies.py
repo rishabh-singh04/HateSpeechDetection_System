@@ -1,6 +1,6 @@
 #  app/schemas/policies.py
 
-from pydantic import BaseModel
+from pydantic import BaseModel, ConfigDict
 from typing import Optional, List
 
 class PolicyDocumentResponse(BaseModel):
@@ -10,7 +10,7 @@ class PolicyDocumentResponse(BaseModel):
     score: Optional[float] = None  # For search results
     
     class Config:
-        orm_mode = True  # Allows conversion from ORM model
+        model_config = ConfigDict(from_attributes=True)
 
 class PolicySearchResponse(BaseModel):
     results: List[PolicyDocumentResponse]

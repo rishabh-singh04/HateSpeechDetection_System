@@ -26,4 +26,10 @@ def test_policy_reasoning():
     print("✅ PolicyReasoningAgent tests passed!")
 
 if __name__ == "__main__":
-    test_policy_reasoning()
+    agent = PolicyReasoningAgent()
+    agent.client = type("MockClient", (), {"chat": MockOpenAI.ChatCompletion})()
+    
+    policies = [{"name": "Policy X", "snippet": "No hate speech."}]
+    reasoning = agent.reason("Hate", "Test input", policies)
+    assert isinstance(reasoning, str)
+    assert len(reasoning) > 0

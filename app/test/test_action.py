@@ -15,7 +15,5 @@ def test_action_recommender():
     # Test default for unknown classification
     assert agent.recommend("Unknown", "Reason")["action"] == "Review"
     
-    print("✅ ActionRecommenderAgent tests passed!")
-
-if __name__ == "__main__":
-    test_action_recommender()
+    # Test default for unknown classification
+    assert agent.recommend("Unknown", "Reason")["action"] == "Review"

@@ -29,7 +29,3 @@ def test_hate_speech_detection():
     assert 0 <= result["confidence"] <= 1
     assert "explanation" in result
     
-    print("✅ HateSpeechDetectionAgent tests passed!")
-
-if __name__ == "__main__":
-    test_hate_speech_detection()
