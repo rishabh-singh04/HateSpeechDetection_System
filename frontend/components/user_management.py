@@ -31,7 +31,7 @@ def render_user_management():
                 with st.spinner("Creating user..."):
                     response = api_request(
                         "POST",
-                        "/users",  # Removed trailing slash for consistency
+                        "users", 
                         json={
                             "username": username,
                             "email": email,

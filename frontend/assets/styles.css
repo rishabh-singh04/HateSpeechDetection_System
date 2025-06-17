@@ -1,8 +1,11 @@
-/* frontend/styles.css */
+frontend/styles.css
 /* Main container styling with gradient */
 html, body {
     margin: 0;
     padding: 0;
+    height: 100%;
+    background: linear-gradient(135deg, #3a1c0d 0%, #6b4b2a 50%, #d4a017 100%);
+    
 }
 
 /* Main container styling with gradient - fixed spacing */
@@ -160,7 +163,7 @@ p, div, span {
     border-radius: 12px;
     margin-bottom: 20px;
     box-shadow: 0 6px 12px rgba(0,0,0,0.15);
-    color: #2a1a0f;
+    color: #0f0e0c;
     transition: transform 0.3s ease;
 }
 
@@ -219,6 +222,7 @@ p, div, span {
 .policy-content {
     background-color: rgba(42, 26, 15, 0.5);
     padding: 15px;
+    color: #2b2313;
     border-radius: 8px;
     margin-top: 10px;
     border-left: 3px solid #d4a017;
@@ -246,6 +250,7 @@ p, div, span {
     transition: all 0.3s ease;
 }
 
+/*  */
 .stTabs [role="tab"][aria-selected="true"] {
     color: #2a1a0f;
     background-color: #d4a017;

@@ -1,10 +1,19 @@
 # app/services/embedding_service.py
 
+
+
+import pathlib
+from dotenv import load_dotenv
+load_dotenv(dotenv_path="/.env") 
+
+import os
+import sys
+sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), '..', '..')))
 from sentence_transformers import SentenceTransformer
 import numpy as np
 import faiss
-import os
 import json
+
 
 def get_embedding(text: str, model_name: str = "all-MiniLM-L6-v2") -> list:
     """Standalone function to get embedding for a single text"""
@@ -38,8 +47,8 @@ class VectorStore:
         self.documents = metadatas
         
         # Save index
-        faiss.write_index(self.index, "policy_index.faiss")
-        with open("policy_metadata.json", "w") as f:
+        faiss.write_index(self.index, "embeddings/policy_index.faiss")
+        with open("embeddings/policy_metadata.json", "w") as f:
             json.dump(self.documents, f)
 
     def search(self, query, k=3):

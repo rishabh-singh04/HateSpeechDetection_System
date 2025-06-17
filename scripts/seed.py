@@ -1,4 +1,4 @@
-# app/db/seed.py
+# scripts/seed.py
 import os
 import sys
 from pathlib import Path
