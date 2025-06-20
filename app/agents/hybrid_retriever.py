@@ -13,6 +13,12 @@ import json
 import numpy as np
 from app.services.embedding_service import get_embedding
 
+"""
+This module defines HybridRetrieverAgent, a class that retrieves top-matching policy 
+documents based on semantic similarity with a query using FAISS + Sentence Transformers + PostgreSQL.
+It blends in-memory vector similarity (using NumPy) with persistent document storage (SQLAlchemy ORM).
+"""
+
 class HybridRetrieverAgent:
     def __init__(self):
         self.model = SentenceTransformer('all-MiniLM-L6-v2')
