@@ -17,6 +17,7 @@ class ModerationResponse(BaseModel):
     reasoning: str
     timestamp: str
     confidence: Optional[float] = Field(None, ge=0, le=1)
+    
 
     @validator('reasoning', pre=True)
     def validate_reasoning(cls, v):

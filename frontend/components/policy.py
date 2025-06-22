@@ -2,69 +2,71 @@
 
 import streamlit as st
 from components.common import api_request
+from datetime import datetime
 
-def render_policy_search():
-    st.header("🔍 Policy Document Search")
+def render_policy_documents():
+    """Display all policy documents in an organized way."""
+    st.header("📜 Policy Documents", anchor="policy-docs")
     
-    with st.expander("ℹ️ Search tips", expanded=False):
-        st.info("""
-        - Use quotes for exact phrases: "content policy"
-        - Combine terms: moderation AND guidelines
-        - Exclude terms: policy NOT update
-        """)
+    with st.expander("ℹ️ About Policy Documents", expanded=False):
+        st.info(
+            "These are the official content moderation policies that govern "
+            "what content is allowed on our platform."
+        )
     
-    with st.form("policy_search_form"):
-        col1, col2 = st.columns([3, 1])
-        with col1:
-            search_query = st.text_input(
-                "Search policies:", 
-                placeholder="Enter search terms..."
-            )
-        with col2:
-            limit = st.number_input("Results limit:", min_value=1, max_value=20, value=5)
-        
-        col1, col2 = st.columns([1, 3])
-        with col1:
-            submitted = st.form_submit_button("🔍 Search")
-        with col2:
-            if st.form_submit_button("🔄 Reset"):
-                st.rerun()
-    
-    # Display results outside the form to allow buttons
-    if submitted and search_query:
-        with st.spinner("Searching policies..."):
-            response = api_request(
-                "GET",
-                "policies/search",
-                params={"query": search_query, "limit": limit}
-            )
-            
-            if response and response.status_code == 200:
-                display_search_results(response.json())
+    # Fetch and display policy documents
+    with st.spinner("Loading policy documents..."):
+        response = api_request("GET", "policies/")
+        if response and response.status_code == 200:
+            policies = response.json()
+            _display_policy_documents(policies)
+        else:
+            st.error("Failed to load policy documents")
 
-def display_search_results(results):
-    st.markdown("---")
-    
-    if not results.get('results'):
-        st.warning("No matching policies found")
+def _display_policy_documents(policies):
+    """Display policy documents with categorized sections."""
+    if not policies:
+        st.warning("No policy documents available")
         return
     
-    st.subheader(f"🔍 Search Results (took {results.get('search_time_ms', 0):.2f} ms)")
+    # Group by categories if available, otherwise show all
+    categories = {p.get('category', 'General') for p in policies}
     
-    for policy in results['results']:
-        with st.expander(f"📄 {policy.get('name', 'Unnamed Policy')} (Score: {policy.get('score', 0):.2f})"):
-            col1, col2 = st.columns([3, 1])
-            with col1:
-                st.markdown(f"**ID:** {policy.get('id')}")
-                st.markdown(f"**Content:**")
-                st.markdown(f"<div class='policy-content'>{policy.get('content', 'No content')}</div>", 
-                          unsafe_allow_html=True)
-            with col2:
-                if policy.get('score') is not None:
-                    st.markdown("**Relevance:**")
-                    st.progress(min(policy['score'], 1.0))
-                
-                # Button is now safely outside the form
-                if st.button("📋 Copy", key=f"copy_{policy.get('id')}"):
-                    st.session_state.notification = "Policy content copied to clipboard!"
-                    st.experimental_rerun()
+    for category in sorted(categories):
+        category_policies = [p for p in policies if p.get('category', 'General') == category]
+        
+        with st.expander(f"📂 {category}", expanded=True):
+            for policy in category_policies:
+                _display_policy_card(policy)
+
+def _display_policy_card(policy):
+    """Display individual policy document card with colored border."""
+    # Determine border color based on policy type/status
+    border_color = {
+        'General': '#1976d2',  # Blue
+        'Security': '#2e7d32',  # Green
+        'Legal': '#d32f2f',    # Red
+        'Community': '#f57c00'  # Orange
+    }.get(policy.get('category', 'General'), '#1976d2')  # Default to blue
+    
+    with st.container():
+        st.markdown(f"""
+        <div class="policy-card" style="
+            background: var(--card-bg);
+            padding: 1.5rem;
+            margin-bottom: 1.5rem;
+            border-left: 5px solid {border_color};
+            border-radius: 12px;
+            box-shadow: 0 1px 4px rgba(0,0,0,0.15);
+        ">
+            <h3 style="margin-top: 0; color: var(--primary);">{policy.get('name', 'Unnamed Policy')}</h3>
+            <div class="snippet-box" style="
+                background: rgba(0,0,0,0.1);
+                padding: 1rem;
+                border-radius: 8px;
+                margin-bottom: 1rem;
+            ">
+                {policy.get('content', 'No content available')}
+            </div>
+        </div>
+        """, unsafe_allow_html=True)

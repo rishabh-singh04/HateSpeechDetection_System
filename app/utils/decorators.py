@@ -7,6 +7,7 @@ from typing import Callable, Any
 from app.data.exports.moderation_exports import ModerationExporter
 from app.schemas.moderation import ModerationResult
 from datetime import datetime
+from typing import Optional
 
 logging.basicConfig(level=logging.INFO)
 logger = logging.getLogger("AgentLogger")
@@ -25,7 +26,7 @@ def handle_errors(default_return=None):
 
 def export_moderation_results(func: Callable) -> Callable:
     @functools.wraps(func)
-    def wrapper(text: str, db: Any) -> Any:
+    def wrapper(text: str, db: Optional[Any] = None) -> Any:
         try:
             result = func(text, db)
             

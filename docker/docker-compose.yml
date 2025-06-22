@@ -4,16 +4,22 @@ services:
   app:
     build:
       context: ..
-      dockerfile: dockerfile/Dockerfile
+      dockerfile: docker/Dockerfile  # Fixed path
     restart: always
     env_file:
-      - ../.env       # ✅ Points to the .env file in the project root
+      - ../.env
     ports:
       - "8000:8000"
     depends_on:
-      - db
+      db:
+        condition: service_healthy
     volumes:
-      - ..:/app
+      - ./../app:/app/app
+      - ./../embeddings:/app/embeddings
+      - ./../data:/app/data
+      - ./../scripts:/app/scripts  # Better volume mount
+    networks:
+      - app-network
 
   db:
     image: postgres:17
@@ -26,6 +32,17 @@ services:
       - "5432:5432"
     volumes:
       - postgres_data:/var/lib/postgresql/data
+    networks:
+      - app-network
+    healthcheck:  # Added healthcheck
+      test: ["CMD-SHELL", "pg_isready -U ${POSTGRES_USER} -d ${POSTGRES_DB}"]
+      interval: 5s
+      timeout: 5s
+      retries: 5
 
 volumes:
   postgres_data:
+  
+networks:
+  app-network:
+    driver: bridge

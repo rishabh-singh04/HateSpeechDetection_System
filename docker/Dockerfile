@@ -17,6 +17,9 @@ RUN apt-get update && apt-get install -y \
 COPY ../requirements.txt .
 RUN pip install --upgrade pip && pip install -r requirements.txt
 
+COPY ../scripts /app/scripts.py
+RUN chmod +x /app/scripts.py/setup.py
+
 # Copy rest of the code
 COPY .. .
 ENV PYTHONPATH=/app
