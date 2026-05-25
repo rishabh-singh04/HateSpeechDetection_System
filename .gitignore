@@ -1,9 +1,25 @@
-myev1/
+# Environments
 .env
+myev1/
+venv/
+env/
+.venv/
 
+# Python caching
 __pycache__/
-_pycache_/
+*.pyc
+*.pyo
+*.pyd
 
+# Testing
 .pytest_cache/
+.coverage
+htmlcov/
 
-backup.sql/
+# Database Backups
+backup.sql
+
+# IDEs and OS files
+.vscode/
+.idea/
+.DS_Store

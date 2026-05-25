@@ -1,6 +1,3 @@
-<<<<<<< HEAD
-# HateSpeechDetection_System
-=======
 <h1 align="center">🛡️ Hate Speech Detection & Content Moderation System</h1>
 
 <p align="center">
@@ -327,4 +324,3 @@ docker-compose up --build -d
 <p align="center">
   <b>Built with ❤️ using FastAPI, Streamlit, and PyTorch</b>
 </p>
->>>>>>> feature-2
