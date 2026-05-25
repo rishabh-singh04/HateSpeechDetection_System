@@ -1,0 +1,37 @@
+YouTube and Google Hate Speech Policy
+
+Overview
+Google prohibits hate speech across its platforms (YouTube, Blogger, etc.) to foster respectful and safe communities. Hate speech includes any content that promotes violence, discrimination, or hatred against individuals or groups based on protected attributes.
+
+Covered Attributes
+- Race, ethnicity, and nationality
+- Religion and caste
+- Disability or health condition
+- Age, gender identity, or sexual orientation
+- Immigration status or veteran status
+
+Prohibited Content
+- Promoting superiority of one group over another
+- Justifying or denying well-documented hate events (e.g., genocide)
+- Mocking victims of discrimination or violence
+- Content that incites violence or segregation
+- Coded language or “dog whistles” used to evade detection
+
+Enforcement Criteria
+Content is reviewed based on context, tone, intent, and metadata. Hate speech disguised as comedy, education, or news will still be removed if it promotes harm.
+
+Graduated Penalty System
+- First Strike: Video removed, channel warning
+- Second Strike: 1-week posting restriction
+- Third Strike: Channel termination
+- Severe single violations: Immediate channel ban
+
+User Reporting & AI Detection
+Google uses a mix of AI classifiers, human moderators, and community flagging to detect hate speech. All flagged content is reviewed by trained reviewers within 24 hours.
+
+Appeals Process
+Users can appeal strikes through YouTube Studio. Successful appeals restore removed content and lift any active restrictions.
+
+Policy Development
+Google updates policies quarterly based on partner NGO recommendations, UN guidelines, and evolving hate trends (e.g., AI-generated hate content).
+

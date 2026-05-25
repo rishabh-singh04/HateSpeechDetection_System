@@ -1,0 +1,36 @@
+Reddit Content Policy: Hate Speech and Abusive Behavior
+
+Overview
+Reddit is a platform for open discussion, but we prohibit content that promotes hate based on identity or vulnerability. Hate speech includes attacks, slurs, and negative generalizations targeting groups based on race, ethnicity, religion, gender identity, sexual orientation, disability, or immigration status.
+
+Definitions
+- Hate speech includes calls for violence, use of racial or homophobic slurs, dehumanizing metaphors, and content that promotes prejudice or exclusion.
+- Content that glorifies historical atrocities (e.g., Holocaust denial) or justifies discrimination is explicitly prohibited.
+- Systematic harassment and “brigading” (targeted attacks by groups) against marginalized communities are also considered hate.
+
+Protected Characteristics
+We do not allow attacks based on:
+- Race or ethnicity
+- Religion or caste
+- National origin
+- Gender identity or presentation
+- Sexual orientation
+- Serious medical conditions or disabilities
+- Socioeconomic status (in the context of hate)
+
+Content Moderation Guidelines
+- Posts using slurs or expressing hatred toward a protected group will be removed.
+- Subreddits dedicated to hateful ideologies will be banned.
+- Harassment, even if veiled in sarcasm or satire, will be treated as a policy violation.
+
+Enforcement Actions
+- First violation: Content removed, warning issued.
+- Second violation: Temporary account ban (3 days).
+- Repeated violations: Subreddit-specific or global account ban.
+- Hate-based communities: Immediate subreddit quarantine or ban.
+
+Appeals Process
+Users can appeal bans by contacting Reddit admins through the appeals portal. Moderator bans can be appealed within the specific subreddit, but platform-level bans must go through Reddit’s admin team.
+
+Transparency and Policy Revisions
+Reddit publishes an annual Transparency Report on enforcement of hate speech policies and moderates with community feedback to refine guidelines.

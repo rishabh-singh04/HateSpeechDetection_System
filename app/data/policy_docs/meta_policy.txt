@@ -1,0 +1,31 @@
+Meta Community Standards: Hate Speech and Harmful Content
+
+Overview
+Meta prohibits hate speech, defined as a direct attack against people on the basis of protected characteristics: race, ethnicity, national origin, disability, religious affiliation, caste, sexual orientation, sex, gender identity, and serious disease.
+
+Definitions
+- Direct attacks include violent or dehumanizing speech, harmful stereotypes, statements of inferiority, expressions of contempt, disgust or dismissal, cursing, and calls for exclusion or segregation.
+- Tier 1 violations include dehumanizing comparisons, mocking victims of hate crimes, and advocating for violence.
+- Tier 2 violations include generalizations about inferiority and statements of contempt.
+- Tier 3 violations include exclusionary statements and calls for segregation.
+
+Exceptions
+We allow content discussing hate speech for educational or awareness purposes. Satire and humor related to hate speech may be allowed if it doesn't reinforce stereotypes or directly attack protected groups.
+
+Content Removal Guidelines
+- Content that explicitly advocates for violence based on protected characteristics will be removed immediately.
+- Dehumanizing comparisons between protected groups and animals, insects, pests, disease, or criminals will be removed.
+- Claims that protected groups are inherently inferior, deficient, or undesirable will be removed.
+
+Enforcement Actions
+- First violation: Warning and content removal
+- Second violation: Temporary restriction (24 hours)
+- Third violation: Temporary restriction (3-7 days)
+- Repeated violations: Account review which may lead to permanent suspension
+- Severe violations: Immediate and permanent account suspension
+
+Appeals Process
+Users can appeal content decisions through the Help Center. Appeals are typically reviewed within 24-48 hours by a separate reviewer.
+
+Policy Updates
+These policies are regularly reviewed and updated based on expert guidance, industry standards, and community feedback. Users are notified of significant policy changes via the Meta Newsroom.
